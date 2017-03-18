@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style>
+body,div{
+	margin: 0;
+	padding: 0;
+}
+#div1{
+	width: 200px;
+	height: 200px;
+	background: red;
+	filter: alpha(opacity:30);
+	opacity: 0.3;
+}
+
+
+</style>
+
+<script>
+window.onload = function() {
+	var oDiv = document.getElementById('div1');
+	oDiv.onmouseover = function() {
+		startMove(100);
+	}
+	oDiv.onmouseout = function() {
+		startMove(30);
+	}
+	var timer = null;
+	// 因为此处无法直接获取style中的透明度所以我们选择定义一个变量，进行比较后，最后赋值给透明度
+	var alpha = 30;
+
+	function startMove(iTarget) {
+		var oDiv = document.getElementById('div1');
+		clearInterval(timer);
+		timer = setInterval(function(){
+			var speed = 0;
+			if (alpha > iTarget) {
+				speed = -10;
+			}else {
+				speed = 10;
+			}
+			if (alpha == iTarget) {
+				clearInterval(timer);
+			}else {
+				alpha += speed;
+				oDiv.style.filter = 'alpha(opacity:'+alpha+')';
+				oDiv.style.opacity = alpha/100;
+			}
+		},30)
+	}
+
+}
+
+</script>
+</head>
+<body>
+	<div id="div1"></div>
+</body>
+</html>
